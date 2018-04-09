@@ -1,0 +1,11 @@
+{
+	"name": "mousewheel",
+	"family": "gallery",
+	"version": "3.1.12",
+	"description": "鼠标滚轮插件的jQuery插件。",
+	"homepage": "https://github.com/jquery/jquery-mousewheel",
+	"spm": {
+		"alias": {"jquery": "jquery"},
+    	"output": ["mousewheel.js"]
+	}
+}

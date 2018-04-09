@@ -1,0 +1,9 @@
+@charset "utf-8";
+/* artDialog扩展 */
+.artui-dialog-alert{ min-width:200px;}
+.artui-dialog-alert span{ max-width:700px; display:inline-block; vertical-align:middle; margin:0 10px;}
+.artui-dialog-alert-success,.artui-dialog-alert-warning,.artui-dialog-alert-error,.artui-dialog-confirm{ width:60px; height:60px; display:inline-block; vertical-align:middle; margin:0 10px;}
+.artui-dialog-alert-success{ background:url(./images/success.png) center center no-repeat;}
+.artui-dialog-alert-warning{ background:url(./images/warning.png) center center no-repeat;}
+.artui-dialog-alert-error{ background:url(./images/error.png) center center no-repeat;}
+.artui-dialog-confirm{ background:url(./images/warning.png) center center no-repeat;}

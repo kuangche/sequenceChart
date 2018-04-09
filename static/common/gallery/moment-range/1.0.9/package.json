@@ -1,0 +1,11 @@
+{
+	"name": "moment-range",
+	"family": "gallery",
+	"version": "1.0.9",
+	"description": "Fancy date ranges for Moment.js",
+	"homepage": "https://github.com/gf3/moment-range",
+	"spm": {
+		"alias": {"moment": "moment"},
+    	"output": ["moment-range.js"]
+	}
+}

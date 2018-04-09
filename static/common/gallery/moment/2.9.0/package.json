@@ -1,0 +1,10 @@
+{
+	"name": "moment",
+	"family": "gallery",
+	"version": "2.9.0",
+	"description": "一个简单易用的轻量级JavaScript日期处理类库，提供了日期格式化、日期解析等功能。",
+	"homepage": "http://momentjs.com/",
+	"spm": {
+    	"output": ["moment.js"]
+	}
+}

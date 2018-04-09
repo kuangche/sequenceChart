@@ -1,0 +1,10 @@
+{
+	"name": "jquery",
+	"family": "gallery",
+	"version": "1.11.1",
+	"description": "JavaScript library for DOM operations",
+	"homepage": "http://jquery.com/",
+	"spm": {
+    	"output": ["jquery.js"]
+	}
+}

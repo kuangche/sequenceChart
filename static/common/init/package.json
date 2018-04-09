@@ -1,0 +1,14 @@
+{
+	"name": "init",
+	"description": "框架初始化。",
+	"spm": {
+		"idleading": "init/",
+		"alias": {
+			"jquery": "jquery",
+			"ajax": "ajax",
+			"dialog": "dialog",
+			"utils": "utils"
+		},
+		"output": ["init.js", "extend/extend.css", "extend/images/*"]
+	}
+}

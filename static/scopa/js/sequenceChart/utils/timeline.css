@@ -1,0 +1,54 @@
+/* timeline */
+
+.timelinesvg .zoom {
+	fill: transparent;
+	cursor: url('./images/cursor-open.cur'), pointer;
+}
+.timelinesvg .zoom.mousedown {
+	cursor: url('./images/cursor-close.cur'), pointer;
+}
+.timelinesvg .graph path {
+	stroke: #dbdbdb;
+	fill: none;
+	stroke-width: 1px;
+}
+.timelinesvg .graph .x-axis line {
+	stroke: #dbdbdb;
+	fill: none;
+	stroke-width: 1px;
+}
+.timelinesvg .graph .y-axis line {
+	stroke: #dbdbdb;
+	fill: none;
+	stroke-width: 1px;
+}
+.timelinesvg .x-axis {
+	height: 23px;
+}
+.timelinesvg .brush rect.extent {
+	fill: steelblue;
+	fill-opacity: .5;
+}
+.timelinesvg .brush .resize path {
+	fill: #eee;
+	stroke: #666;
+}
+.timelinesvg .svgtools rect {
+	fill: red;
+	fill-opacity: 0.1;
+}
+.timelinesvg .svgtools text {
+	cursor: pointer;
+}
+.timelinesvg .svgtools text:hover {
+	fill: #11293e;
+}
+.timelinesvg .svgtools text.active {
+	fill: dodgerblue;
+	fill-opacity: 0.8;
+}
+.timelinesvg .closebrush {
+	font-size: 18px;
+	opacity: 0.8;
+	font-weight: normal;
+}
