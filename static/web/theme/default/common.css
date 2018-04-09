@@ -15,6 +15,17 @@ body .mCS-minimal.mCSB_scrollTools .mCSB_dragger:active .mCSB_dragger_bar,
 body .mCS-minimal.mCSB_scrollTools .mCSB_dragger.mCSB_dragger_onDrag .mCSB_dragger_bar { background-color: rgba(0,0,0,.4);}
 
 /* sequenceChart*/
+dl,dd{
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+dl{
+	margin-bottom: 20px;
+}
+dt{
+	font-weight: bold;
+}
 div{
 	box-sizing: border-box;
 }

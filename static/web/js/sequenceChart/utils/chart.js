@@ -211,7 +211,7 @@ define(function(require,exports,module) {
 				.attr('date',opts.currDate)
 				.attr('nodeid', opts.nodeId)
 				.on('click',function(){
-					callBack($(this).attr('date'),$(this).attr('nodeid'))
+					callBack(this,$(this).attr('date'),$(this).attr('nodeid'))
 				});
 			}
 	

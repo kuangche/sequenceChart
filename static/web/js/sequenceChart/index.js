@@ -2,6 +2,7 @@ define(function(require,exports,module){
 	require('./mockData');
 	$(function(){
 		require('moment');
+		var $dialog = require('dialog');
 		var tree = require('./utils/tree');
 		var timeLine = require('./utils/timeLine');
 		var chart = require('./utils/chart');
@@ -35,8 +36,20 @@ define(function(require,exports,module){
 		})
 		
 		//弹框展示详细信息
-		function dlgShowDetail(date,id){
-			alert(date+'------'+id)
+		function dlgShowDetail(node,date,id){
+			var dlg = $dialog({
+				title: '详细记录',
+				align: 'right',
+				content: '<dl>'+
+							'<dt>2018-04-01<dd>'+
+							'<dd><div>账号：321315646541654</div><div>|<div><div>账号：321315646541654</div><dd>'+
+						'</dl>'+
+						'<dl>'+
+							'<dt>2018-04-03<dd>'+
+							'<dd><div>账号：321315646541654</div><div>|<div><div>账号：321315646541654</div><dd>'+
+						'</dl>'
+			});
+			dlg.show(node);
 		}
 		
 		//获取时序图数据
