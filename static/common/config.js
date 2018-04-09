@@ -65,18 +65,11 @@ seajs.config({
     base: (typeof staticUrl == 'undefined' ? '/static' : staticUrl) + '/common',
     map:[ [ /(^(?!.*(config|jquery|seajs-log|seajs-style|seajs-combo|seajs-debug|control|controldialog)\.(css|js)).*)$/i, '$1?t=' + seajs.timestamp] ],
     paths: {
-    	baidu: staticUrl + '/common/gallery/baidu',
-    	bootstrap: staticUrl + '/common/gallery/bootstrap',
-    	scopa: staticUrl + '/scopa/js',
-    	common: staticUrl + '/scopa/js/common',
-    	core: staticUrl + '/scopa/js/core',
-    	console: staticUrl + '/scopa/js/console',
-    	harts: staticUrl + '/scopa/js/harts',
-    	app: staticUrl + '/app'
+    	web: staticUrl + '/web/js',
     },
     preload:[ 'seajs-log', 'seajs-style'],
     //debug: (seajs.timestamp == '201609011800' ? true : false),
-    preload:[ 'seajs-log', 'seajs-style'],
+    preload:[ 'seajs-log', 'seajs-style','init'],
     debug: false,
     charset:'utf-8'
 });
