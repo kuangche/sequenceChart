@@ -2,7 +2,7 @@ define(function(require,exports,module){
 	require('./mockData');
 	$(function(){
 		require('moment');
-		var tree = require('./utils/Tree');
+		var tree = require('./utils/tree');
 		var timeLine = require('./utils/timeLine');
 		var line = require('./utils/line');
 		
