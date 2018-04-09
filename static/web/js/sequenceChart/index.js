@@ -39,6 +39,7 @@ define(function(require,exports,module){
 		function dlgShowDetail(node,date,id){
 			var dlg = $dialog({
 				title: '详细记录',
+				quickClose: true,
 				align: 'right',
 				content: '<dl>'+
 							'<dt>2018-04-01<dd>'+
