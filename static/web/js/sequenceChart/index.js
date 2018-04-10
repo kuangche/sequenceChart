@@ -124,6 +124,20 @@ define(function(require,exports,module){
 				data.forEach(function(dateItem){
 					dateItem.record.forEach(function(peopleItem){
 						var id = peopleItem.id;
+						var newPeopleItem = [];
+						peopleItem.to.forEach(function(item){
+							var noPush = false;
+							
+							newPeopleItem.forEach(function(thisItem){
+								if(item.id == thisItem.id){
+									noPush = true;
+								}
+							})
+							if(!noPush){
+								newPeopleItem.push(item)
+							}
+						});
+						peopleItem.to = newPeopleItem
 						var newArr = [];
 						peopleItem.to.forEach(function(item){
 							if(item.id == id) return;
