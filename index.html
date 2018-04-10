@@ -8,6 +8,7 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link href="./static/web/theme/default/images/common/favicon.ico" rel="shortcut icon">
+		<link href="./static/common/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
 		<link href="./static/web/theme/default/common.css" rel="stylesheet">
 		<script src="./static/common/seajs/seajs/2.2.1/sea.js" id="seajsnode" type="text/javascript"></script>
 		<script src="./static/common/config.js?t=20140104" type="text/javascript"></script>
@@ -16,6 +17,21 @@
 	<body>
 		<div class="box">
 			<div class="sequenceChart">
+				<div class="operate">
+					<button>切换主体</button>
+					<button>清空全部</button>
+					<div class="filter">
+						<span>时间范围：</span>
+						<input type="timeRange" value="2016-01-01 至 2018-01-01"  id='range'/>
+					</div>
+					<div class="filter">
+						<span>排序|：</span>
+						<select id="order">
+							<option value="number">交易数量</option>
+							<option value="time">交易时间</option>
+						</select>
+					</div>
+				</div>
 				<div class="timeLine" id="timeLine"></div>
 				
 				<div class="chartBox">

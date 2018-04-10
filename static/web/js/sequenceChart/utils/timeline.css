@@ -2,10 +2,10 @@
 
 .timelinesvg .zoom {
 	fill: transparent;
-	cursor: url('./images/cursor-open.cur'), pointer;
+	cursor: pointer;
 }
 .timelinesvg .zoom.mousedown {
-	cursor: url('./images/cursor-close.cur'), pointer;
+	cursor: pointer;
 }
 .timelinesvg .graph path {
 	stroke: #dbdbdb;

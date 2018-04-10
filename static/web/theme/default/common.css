@@ -14,6 +14,68 @@ body .mCS-minimal.mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar{ background-c
 body .mCS-minimal.mCSB_scrollTools .mCSB_dragger:active .mCSB_dragger_bar,
 body .mCS-minimal.mCSB_scrollTools .mCSB_dragger.mCSB_dragger_onDrag .mCSB_dragger_bar { background-color: rgba(0,0,0,.4);}
 
+/* artDialog */
+body .artui-dialog{ font-family:Arial,"Microsoft Yahei","微软雅黑","宋体"; font-size:14px; color:#505050; border-radius:0; border-color:#ddd;}
+body .artui-dialog-footer{ background-color:#eaeaea; border-top:1px solid #ddd; padding:20px;}
+body .artui-dialog-footer button{ border-radius:0; padding:9px 35px; background:#f3f3f3; border-color:#ddd;}
+body .artui-dialog-footer button:hover, 
+body .artui-dialog-footer button:focus, 
+body .artui-dialog-footer button:active{ background:#f9f9f9;}
+body .artui-dialog-footer button.artui-dialog-autofocus{ background-color:#49a7f0; border-color:#49a7f0;}
+body .artui-dialog-footer button.artui-dialog-autofocus:hover,
+body .artui-dialog-footer button.artui-dialog-autofocus:focus,
+body .artui-dialog-footer button.artui-dialog-autofocus:active{ background-color:#3e98df; border-color:#3e98df;}
+body .artui-dialog-footer button+button{ margin-left:10px;}
+
+/* selecrt2 */
+body .select2-container-multi .select2-choices,
+body .select2-container .select2-choice{ 
+	border-radius:0; 
+	line-height:1.42857143;
+  color:#555;
+  background-color:#fff;
+  background-image:none;
+  -webkit-box-shadow:inset 0 1px 1px rgba(0, 0, 0, .075);
+          box-shadow:inset 0 1px 1px rgba(0, 0, 0, .075);
+  -webkit-transition:border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+          transition:border-color ease-in-out .15s, box-shadow ease-in-out .15s;}
+body .select2-container-multi .select2-choices .select2-search-field input{ padding:4px 5px;}
+body .select2-container-multi .select2-choices .select2-search-choice{ margin:4px 0 4px 5px}
+body .select2-container .select2-choice{ width:100%; height:24px; line-height:24px; border-color:#ddd;}
+body .select2-container .select2-choice .select2-arrow{border-radius:0; border-color:#ddd;}
+body .select2-container.form-control{ padding:0; border:0;}
+body .select2-container.form-control .select2-choice .select2-arrow b{ background-position:0 4px;}
+body .select2-drop-active{ border-color:#ddd;}
+body .select2-results .select2-highlighted{ background-color:#3e98df;}
+body .select2-search input{ padding: 2px 20px 2px 5px;}
+
+/*datetimepicker*/
+.datetimepicker{background: #162a42;}
+.datetimepicker td,
+.datetimepicker th{color: #fff;}
+[class*=" datetimepicker-dropdown"]:after{border-bottom: 6px solid #162A42!important;}
+.datetimepicker thead tr:first-child th:hover,
+.datetimepicker tfoot tr:first-child th:hover{background: rgba(238, 238, 238, 0.3)!important;}
+.datetimepicker table tr td span:hover{background: rgba(238,238,238,0.3)!important;}
+
+/*daterangepicker*/
+.daterangepicker td.disabled {background-color: #f1f1f1!important; cursor: no-drop!important;}
+.daterangepicker .ranges .input-mini{ background:none!important;color:#fff!important;}
+.daterangepicker,
+.daterangepicker .calendar-date{ background:#162a42!important;}
+.daterangepicker td.disabled {background: none!important;color:#949494!important;}
+.daterangepicker td.in-range {background: rgba(235, 244, 248, 0.2)!important;}
+.daterangepicker .calendar-date {border: 1px solid #456289!important;}
+.daterangepicker td, .daterangepicker th { background:none!important;color:#fff;}
+.daterangepicker td.available{color:#fff!important;}
+.daterangepicker td.active,
+.daterangepicker td.active:hover{
+    background-color: #357ebd!important;
+    border-color: #3071a9!important;
+    color: #fff!important;
+}
+.daterangepicker.opensright:after,
+.daterangepicker.opensleft:after{border-bottom: 6px solid rgb(22, 42, 66)!important;}
 /* sequenceChart*/
 dl,dd{
 	margin: 0;
@@ -47,10 +109,10 @@ div{
 	line-height:22px;
 }
 .sequenceChart .timeLine{
-	height: 80px;
+	height: 40px;
 	width: calc(100% - 230px);
 	position: absolute;
-	top: 0;
+	top: 40px;
 	right: 0;
 	left:230px;
 }
@@ -109,4 +171,35 @@ div{
 .sequenceChart .timelinesvg{
 	position: absolute;
 	z-index: 2;
+}
+
+.sequenceChart .operate{
+	height: 30px;
+	width: 100%;
+	position: absolute;
+	left: 0;
+	top: 5px;
+	right: 0;
+	z-index: 9;
+}
+.sequenceChart .operate button{
+	margin-right: 20px;
+	background: #62d982;
+	height: 30px;
+	line-height: 30px;
+	padding: 0 15px;
+	border: none;
+	color: white;
+	cursor: pointer;
+}
+
+.sequenceChart .operate .filter{
+	float: right;
+	margin-left: 20px;
+}
+.sequenceChart .operate #range{
+	border: 1px solid #CCCCCC;
+	height: 24px;
+	line-height: 24px;
+	width: 180px;
 }

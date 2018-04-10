@@ -44,30 +44,69 @@ define(function(require,exports,module) {
 			var currDate = options.date;
 			var nodeId = options.id;
 			var lineCon = content.append('g')
-				.attr('id', 'TLLine' + nodeId);
+				.attr('date', currDate)
+				.attr('nodeid', nodeId)
+				.attr('class','lincon')
+				.attr('id', 'TLLine' + nodeId)
+				.on('mouseover',function(){
+					$('#TLLineCon .lincon').css('opacity',0.1);
+					$(this).css('opacity',1);
+					
+					var nodeId = $(this).attr('nodeid');
+					$('.y-line').css('opacity',0.3);
+					$('#line'+nodeId).css('opacity',1);
+				})
+				.on('mouseout',function(){
+					$('.lincon,.y-line').css('opacity',1);
+				})
 			
-			options.pointList.forEach(function(item, index) {
-				//画点
-				var recordNum = 0;
-				if(index == 0) {
-					recordNum = options.pointList.length - 1;
+			//根据方向分组排序
+			var newToPointListBig =[];//分组并排序后的数组(比当前点的坐标值大)
+			options.toPointList.forEach(function(item){
+				if(item[1] > options.currPoint[1]){//比较y轴的坐标值大小
+					newToPointListBig.push(item)
 				}
-				
+			});
+			newToPointListBig.sort(function(a,b){
+				return a[1]-b[1]
+			});
+			
+			var newToPointListSmall =[];//分组并排序后的数组(比当前点的坐标值小)
+			options.toPointList.forEach(function(item){
+				if(item[1] < options.currPoint[1]){//比较y轴的坐标值大小
+					newToPointListSmall.push(item)
+				}
+			});
+			newToPointListSmall.sort(function(a,b){
+				return a[1]-b[1]
+			});
+			
+			//画统计交易数量的原点
+			initCircle({
+				content: lineCon,
+				nodeId:nodeId,
+				currDate:currDate,
+				recordNum: options.toPointList.length,
+				point: {
+					x: options.currPoint[0],
+					y: options.currPoint[1]
+				}
+			});
+
+			newToPointListSmall.forEach(function(item, index) {
+				//画点
 				initCircle({
 					content: lineCon,
 					nodeId:nodeId,
 					currDate:currDate,
-					recordNum: recordNum,
 					point: {
 						x: item[0],
 						y: item[1]
 					}
 				});
 	
-				
-				if(index == options.pointList.length - 1) return;
-				var endPoint = options.pointList[index + 1];
-				var startPoint = item;
+				var startPoint = index == 0 ? options.currPoint : newToPointListSmall[index - 1];
+				var endPoint = newToPointListSmall[index];
 	
 				//画线
 				initP2PLine({
@@ -80,7 +119,39 @@ define(function(require,exports,module) {
 				//标注转账钱数
 				inintMoneyText({
 					content: lineCon,
-					money: thousandBitSeparator(parseInt(Math.random() * 1000000)),
+					money: thousandBitSeparator(item[2]),
+					startPoint: startPoint, //路径起点处
+					endPoint: endPoint
+				});
+			});
+			
+			newToPointListBig.forEach(function(item, index) {
+				//画点
+				initCircle({
+					content: lineCon,
+					nodeId:nodeId,
+					currDate:currDate,
+					point: {
+						x: item[0],
+						y: item[1]
+					}
+				});
+	
+				var startPoint = index == 0 ? options.currPoint : newToPointListBig[index - 1];
+				var endPoint = newToPointListBig[index];
+	
+				//画线
+				initP2PLine({
+					content: content,
+					lineCon: lineCon,
+					startPoint: startPoint,
+					endPoint: endPoint,
+				})
+	
+				//标注转账钱数
+				inintMoneyText({
+					content: lineCon,
+					money: thousandBitSeparator(item[2]),
 					startPoint: startPoint, //路径起点处
 					endPoint: endPoint
 				});
@@ -109,6 +180,9 @@ define(function(require,exports,module) {
 			yLine.enter()
 				.append('g')
 				.classed('y-line', true)
+				.attr('id',function(pointY,index){
+					return 'line'+(index+1)
+				})
 				.attr('transform', 'translate(0.5 0.5)')
 				.append('line')
 				.attr('transform', function(d, index){
@@ -122,7 +196,7 @@ define(function(require,exports,module) {
 		
 		/**
 		 * function
-		 * 箭头方法
+		 * 初始化箭头方法
 		 */
 		function initArrow(options) {
 			var defOpts = {
@@ -303,20 +377,23 @@ define(function(require,exports,module) {
 				if(moment(currDate).isAfter(startDate) && moment(currDate).isBefore(endDate)){
 					//遍历当前日期内的所有人的交易记录
 					item.record.forEach(function(nodeData){
-						var pointList = [];
+						var toPointList = [];
 						var currNodeId = nodeData.id;
-						var x = xScale(moment(currDate).toDate());//根据日期返回当前的x轴坐标
+						var currX = xScale(moment(currDate).toDate());//根据日期返回当前的x轴坐标
+						var currY = (currNodeId-1)* config.nodeHeight + config.nodeHeight/2
 						//遍历当前客户或者账号对其他的人或账号的转账记录
 						nodeData.to.forEach(function(toData){
+							var money = toData.money;
 							//、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、//
 							var y = (toData.id-1)* config.nodeHeight + config.nodeHeight/2;
 							//、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、//
-							pointList.push([x,y])
+							toPointList.push([currX,y,money])
 						});
 						formatData.push({
-							pointList:pointList,
+							toPointList:toPointList,
 							id:currNodeId,
-							date:currDate
+							date:currDate,
+							currPoint:[currX,currY]
 						})
 					})
 				}
@@ -329,7 +406,8 @@ define(function(require,exports,module) {
 		formatData.forEach(function(data){
 			initRelationLine({
 				svg: svg,
-				pointList:data.pointList,
+				toPointList:data.toPointList,
+				currPoint: data.currPoint,
 				date:data.date,
 				id: data.id
 			})

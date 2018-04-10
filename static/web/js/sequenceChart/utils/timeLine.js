@@ -12,7 +12,7 @@ define(function(require,exports,module){
 				minScale: 0.01, //缩放最小级别
 				maxScale: 100, //缩放最大级别
 				width: 2000,
-				height: 80,
+				height: 40,
 				locale: d3.locale({//不可删
 	                "decimal": ",",
 	                "thousands": " ",
@@ -44,41 +44,6 @@ define(function(require,exports,module){
 			
 			var config = $.extend(defaultConfig,options);
 			
-			//删除已有图层，重新渲染
-			d3.select('.timelinesvg').remove();
-			var	svg = d3.select('#'+config.id)
-				.append('svg')
-				.classed('timelinesvg', true)
-				.attr('width', config.width)
-				.attr('height', config.height);
-						
-			// 绘制坐标轴
-			var graph = svg.append('g')
-				.classed('graph', true);
-			
-			//时间比例尺/时间轴取值范围控制
-			var xScale = d3.time.scale()
-				.range([0, config.width])
-				.domain([moment(config.start).toDate(), moment(config.end).toDate()]);
-			
-			//Zoom控制
-			var	zoom = d3.behavior.zoom()
-				.center(null)
-				.scaleExtent([config.minScale, config.maxScale]) //scaleExtent 用于设置最小和最大的缩放比例
-				.x(xScale)
-				.on('zoom', zoomUpdate)
-				.on('zoomend', zoomEnd);
-						
-			var zoomWidth = config.width;
-			var	zoomHeight = config.height;
-			var zoomRect = svg
-				.append('rect')
-				.call(zoom)	//call 相当于定义一个函数，再把选择的元素给它
-				.attr('class', 'zoom')
-				.attr('width', zoomWidth)
-				.attr('height', zoomHeight)
-				.attr('transform', 'translate(0, 0)');
-          	
           	/**
 			 * 绘制时间轴刻度
 			 */
@@ -131,7 +96,6 @@ define(function(require,exports,module){
 					data: dataFromat(viewStartDate,viewEndDate,config.data)
 				});
 				
-				showViewTime(viewStartDate,viewEndDate);
 				
 				if(typeof config.eventZoom === 'function'){
 					config.eventZoom(viewStartDate,viewEndDate);
@@ -150,16 +114,6 @@ define(function(require,exports,module){
 			}
 			
 			/**
-			 * 显示可是区域内时间范围
-			 */
-			function showViewTime(start,end){
-				if($('.ViewTime').size() ==0 ){
-					$("#"+config.id).prepend("<div class='ViewTime' style='position: absolute;top: 5px;width: 100%;height: 30px;'></div>");
-				}
-				$('.ViewTime').empty().append(moment(start).format('YYYY-MM-DD')+ ' 至 ' +moment(end).format('YYYY-MM-DD'))
-			}
-			
-			/**
 			 * 画日期区块图
 			 */
 			function drawDateBlock(options){
@@ -175,7 +129,7 @@ define(function(require,exports,module){
 				
 				//添加时间区块背景边框
 				if($('.dateBlockBorder').size() ==0 ){
-					$("#"+config.id).prepend("<div class='dateBlockBorder' style='border: 1px solid #ececec;position: absolute; z-index:1px; top: 45px;width: 100%;height: 10px;'></div>");
+					$("#"+config.id).prepend("<div class='dateBlockBorder' style='border: 1px solid #ececec;position: absolute; z-index:1; top: 0;width: 100%;height: 10px;'></div>");
 				}
 				
 				opts.con.select('.TLDateRange').remove();
@@ -213,7 +167,7 @@ define(function(require,exports,module){
 					.attr("x", function(d) {
 						return d.index*unitLong;
 					})
-					.attr("y", 45)
+					.attr("y", 0)
 					.attr("fill", opts.color);
 			}
 			
@@ -231,6 +185,41 @@ define(function(require,exports,module){
 				return dateBlock;
 			}
 			
+			//删除已有图层，重新渲染
+			d3.select('.timelinesvg').remove();
+			var	svg = d3.select('#'+config.id)
+				.append('svg')
+				.classed('timelinesvg', true)
+				.attr('width', config.width)
+				.attr('height', config.height);
+				
+			//时间比例尺/时间轴取值范围控制
+			var xScale = d3.time.scale()
+				.range([0, config.width])
+				.domain([moment(config.start).toDate(), moment(config.end).toDate()]);
+				
+			// 绘制坐标轴
+			var graph = svg.append('g')
+				.classed('graph', true);
+			
+			//Zoom控制
+			var	zoom = d3.behavior.zoom()
+				.center(null)
+				.scaleExtent([config.minScale, config.maxScale]) //scaleExtent 用于设置最小和最大的缩放比例
+				.x(xScale)
+				.on('zoom', zoomUpdate)
+				.on('zoomend', zoomEnd);
+						
+			var zoomWidth = config.width;
+			var	zoomHeight = config.height;
+			var zoomRect = svg
+				.append('rect')
+				.call(zoom)	//call 相当于定义一个函数，再把选择的元素给它
+				.attr('class', 'zoom')
+				.attr('width', zoomWidth)
+				.attr('height', zoomHeight)
+				.attr('transform', 'translate(0, 0)');
+				
 			drawXAxis();
 			drawDateBlock({
 				con: svg,
@@ -241,7 +230,6 @@ define(function(require,exports,module){
 				data: dataFromat(config.start,config.end,config.data)
 			});
 			config.eventZoom(config.start,config.end);
-			showViewTime(config.start,config.end);
 		
 	}
 	module.exports = {
