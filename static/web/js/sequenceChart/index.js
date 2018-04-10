@@ -126,7 +126,7 @@ define(function(require,exports,module){
 						var id = peopleItem.id;
 						var newArr = [];
 						peopleItem.to.forEach(function(item){
-							if(item.id == id || item.id < id) return;
+							if(item.id == id) return;
 							var push = true;
 							newArr.forEach(function(obj){
 								if(obj.id == item.id)push = false;

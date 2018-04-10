@@ -78,7 +78,7 @@ define(function(require,exports,module) {
 				}
 			});
 			newToPointListSmall.sort(function(a,b){
-				return a[1]-b[1]
+				return b[1] - a[1]
 			});
 			
 			//画统计交易数量的原点
@@ -284,6 +284,7 @@ define(function(require,exports,module) {
 				opintG = opts.content.append('g')
 				.attr('date',opts.currDate)
 				.attr('nodeid', opts.nodeId)
+				.attr('class','centerPoint')
 				.on('click',function(){
 					callBack(this,$(this).attr('date'),$(this).attr('nodeid'))
 				});

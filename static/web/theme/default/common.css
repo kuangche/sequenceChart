@@ -203,3 +203,6 @@ div{
 	line-height: 24px;
 	width: 180px;
 }
+.sequenceChart .centerPoint{
+	cursor: pointer;
+}
