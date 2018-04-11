@@ -206,3 +206,16 @@ div{
 .sequenceChart .centerPoint{
 	cursor: pointer;
 }
+
+.sequenceChart .changeDataSource{
+	position: absolute;
+    left: 0;
+    bottom: 0;
+    z-index: 2;
+    border: 1px solid #dddee4;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    width: 231px;
+    background: #fbfbfb;
+}

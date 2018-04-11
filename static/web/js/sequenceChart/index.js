@@ -31,32 +31,76 @@ define(function(require,exports,module){
 		    opens:'right'
 		},function(start, end, label) {
 			timeLine.init({
-			id:'timeLine',
-			width:$('#timeLine').width(),
-			height:$('#timeLine').height(),
-			start:start,
-			end:end,
-			data:data,
-			eventZoom:function(viewStartDate,viewEndDate){
-				showViewTime(viewStartDate,viewEndDate);
-				//画图
-				chart.init({
-					id:'chartbox',
-					data:data,
-					start:viewStartDate,
-					end:viewEndDate,
-					width:$('#timeLine').width(),
-					height:$('#timeLine').height(),
-					nodeSize:7,
-					nodeHeight:36,
-					callBack:dlgShowDetail
-				});
-			}
-		});
+				id:'timeLine',
+				width:$('#timeLine').width(),
+				height:$('#timeLine').height(),
+				start:start,
+				end:end,
+				data:data,
+				eventZoom:function(viewStartDate,viewEndDate){
+					showViewTime(viewStartDate,viewEndDate);
+					//画图
+					chart.init({
+						id:'chartbox',
+						data:data,
+						start:viewStartDate,
+						end:viewEndDate,
+						width:$('#timeLine').width(),
+						height:$('#timeLine').height(),
+						nodeSize:7,
+						nodeHeight:36,
+						callBack:dlgShowDetail
+					});
+				}
+			});
         });
+        
+        $('.changeDataSource').click(function(){
+        	var dlg = $dialog({
+				title: '详细记录',
+				quickClose: true,
+				width:800,
+				height:450,
+				content: '<div><img src='+ staticUrl+'/web/theme/default/images/dataSource.png></div>'
+			}).showModal()
+        });
+        
+        $('.changeSource').click(function(){
+        	var $this = $(this);
+        	var type = $this.data('type');
+        	//获取ztree数据
+			$.ajax({
+				url:'/treeData'+type,
+				type:'get',
+				success:function(data){
+					if(type == 1){
+						$this.data('type' , 2)
+					}else{
+						$this.data('type' , 1)
+					}
+					var treeData = JSON.parse(data).data;
+					//初始化ztree
+					tree.init({
+						id:'graphLegendTree',
+						data:treeData,
+						mounted:function(expandSize,data){
+							inintChart(expandSize);
+						},
+						open:function(expandSize,data){
+							inintChart(expandSize);
+						},
+						close:function(expandSize,data){
+							inintChart(expandSize);
+						}
+					});
+				},
+				error:function(data){}
+			})
+        })
+        
 		//获取ztree数据
 		$.ajax({
-			url:'/treeData',
+			url:'/treeData1',
 			type:'get',
 			success:function(data){
 				var treeData = JSON.parse(data).data;
