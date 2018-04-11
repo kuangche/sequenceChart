@@ -366,6 +366,15 @@ define(function(require,exports,module) {
 		 *数据格式化 
 		 */
 		function dataFormat(startDate,endDate,nodeSize,data,width){
+			//计算可视区域内总天数
+			var getDateIndex = function(date) {
+				var start = moment(startDate);
+				var end = moment(date);
+				return end.diff(start, 'day');
+			}
+			var dayLong = getDateIndex(endDate) + 1;
+			var unitLong = width / dayLong; //每天所占单元格长度（px）
+			
 			var xScale = d3.time.scale()
 					.range([0, width])
 					.domain([moment(startDate).toDate(), moment(endDate).toDate()]);
@@ -380,7 +389,7 @@ define(function(require,exports,module) {
 					item.record.forEach(function(nodeData){
 						var toPointList = [];
 						var currNodeId = nodeData.id;
-						var currX = xScale(moment(currDate).toDate());//根据日期返回当前的x轴坐标
+						var currX = unitLong/2 + xScale(moment(currDate).toDate());//根据日期返回当前的x轴坐标
 						var currY = (currNodeId-1)* config.nodeHeight + config.nodeHeight/2
 						//遍历当前客户或者账号对其他的人或账号的转账记录
 						nodeData.to.forEach(function(toData){

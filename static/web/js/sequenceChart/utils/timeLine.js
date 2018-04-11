@@ -85,8 +85,8 @@ define(function(require,exports,module){
 				
 				drawXAxis();
 				//返回可是区域内时间范围
-				var viewStartDate = moment(xScale.domain()[0]).format('YYYY-MM-DD');
-				var viewEndDate = moment(xScale.domain()[1]).format('YYYY-MM-DD');
+				var viewStartDate = moment(xScale.domain()[0]).format('YYYY-MM-DD HH:mm:ss');
+				var viewEndDate = moment(xScale.domain()[1]).format('YYYY-MM-DD HH:mm:ss');
 				drawDateBlock({
 					con: svg,
 					height:10,
@@ -103,22 +103,12 @@ define(function(require,exports,module){
 			}
 			
 			/**
-			 * 缩放结束时回调方法
-			 */
-			function zoomEnd(){
-				if(config.eventZoom){
-					var viewStartDate = moment(xScale.domain()[0]).format('YYYY-MM-DD');
-					var viewEndDate = moment(xScale.domain()[1]).format('YYYY-MM-DD')
-					config.eventZoom(viewStartDate,viewEndDate);
-				}
-			}
-			
-			/**
 			 * 画日期区块图
 			 */
 			function drawDateBlock(options){
 				var defOpts = {
 					con: null,
+					width:1000, //日期区块宽度
 					height:10,//日期区块高度
 					startDate: '2017-01-01',
 					endDate: '2017-02-01',
@@ -137,7 +127,8 @@ define(function(require,exports,module){
 					.append('g')
 					.classed('TLDateRange', true)
 					.attr('transform', 'translate(0,0)');
-				//计算天数
+					
+				//计算可视区域内总天数
 				var getDateIndex = function(date) {
 					var start = moment(opts.startDate);
 					var end = moment(date);
@@ -146,26 +137,21 @@ define(function(require,exports,module){
 		
 				var width = opts.width;
 				var height = opts.height;
-		
 				var dayLong = getDateIndex(opts.endDate) + 1;
-				var unitLong = width / dayLong; //每个单元格长度（px）
+				var unitLong = width / dayLong; //每天所占单元格长度（px）
+				var innerScale = d3.time.scale()
+						.range([0, width])
+						.domain([moment(opts.startDate).toDate(), moment(opts.endDate).toDate()]);
 		
-				var formatData = [];
-				opts.data.forEach(function(item){
-					formatData.push({
-						index:getDateIndex(item),
-						date:item
-					})
-				});
 				dateBlock.selectAll("rect")
-					.data(formatData)
+					.data(opts.data)
 					.enter()
 					.append("rect")
-					.attr('title',function(d){return d.date})
+					.attr('title',function(d){return d})
 					.attr("width", unitLong)
 					.attr("height", height)
 					.attr("x", function(d) {
-						return d.index*unitLong;
+						return innerScale(moment(d).toDate());
 					})
 					.attr("y", 0)
 					.attr("fill", opts.color);
@@ -208,7 +194,6 @@ define(function(require,exports,module){
 				.scaleExtent([config.minScale, config.maxScale]) //scaleExtent 用于设置最小和最大的缩放比例
 				.x(xScale)
 				.on('zoom', zoomUpdate)
-				.on('zoomend', zoomEnd);
 						
 			var zoomWidth = config.width;
 			var	zoomHeight = config.height;
