@@ -35,6 +35,7 @@ define(function(require,exports,module) {
 			} else {
 				content = options.svg.selectAll('#TLLineCon');
 			}
+			
 			//画箭头
 			initArrow({
 				content: content
@@ -43,13 +44,13 @@ define(function(require,exports,module) {
 			//关系线容器
 			var currDate = options.date;
 			var nodeId = options.id;
-			var lineCon = content.append('g')
+			var recordItemCon = content.append('g')
 				.attr('date', currDate)
 				.attr('nodeid', nodeId)
-				.attr('class','lincon')
-				.attr('id', 'TLLine' + nodeId)
+				.attr('class','recordItem')
+				.attr('id', 'recordId' + nodeId)
 				.on('mouseover',function(){
-					$('#TLLineCon .lincon').css('opacity',0.1);
+					$('#TLLineCon .recordItem').css('opacity',0.1);
 					$(this).css('opacity',1);
 					
 					var nodeId = $(this).attr('nodeid');
@@ -57,11 +58,15 @@ define(function(require,exports,module) {
 					$('#line'+nodeId).css('opacity',1);
 				})
 				.on('mouseout',function(){
-					$('.lincon,.y-line').css('opacity',1);
+					$('.recordItem,.y-line').css('opacity',1);
 				})
 			
+			var lineCon = recordItemCon.append('g').attr('class','lineCon');
+			var pointCon = recordItemCon.append('g').attr('class','pointCon');
+			var textCon =  recordItemCon.append('g').attr('class','textCon');
+			
 			//根据方向分组排序
-			var newToPointListBig =[];//分组并排序后的数组(比当前点的坐标值大)
+			var newToPointListBig =[];//分组并排序后的数组(比当前点的坐标值大——箭头向下)
 			options.toPointList.forEach(function(item){
 				if(item[1] > options.currPoint[1]){//比较y轴的坐标值大小
 					newToPointListBig.push(item)
@@ -71,7 +76,7 @@ define(function(require,exports,module) {
 				return a[1]-b[1]
 			});
 			
-			var newToPointListSmall =[];//分组并排序后的数组(比当前点的坐标值小)
+			var newToPointListSmall =[];//分组并排序后的数组(比当前点的坐标值小——箭头向上)
 			options.toPointList.forEach(function(item){
 				if(item[1] < options.currPoint[1]){//比较y轴的坐标值大小
 					newToPointListSmall.push(item)
@@ -83,20 +88,22 @@ define(function(require,exports,module) {
 			
 			//画统计交易数量的原点
 			initCircle({
-				content: lineCon,
+				content: recordItemCon,
 				nodeId:nodeId,
 				currDate:currDate,
 				recordNum: options.toPointList.length,
 				point: {
 					x: options.currPoint[0],
 					y: options.currPoint[1]
-				}
+				},
+				toSelf:options.toSelf
 			});
-
+			
+			//箭头向上
 			newToPointListSmall.forEach(function(item, index) {
 				//画点
 				initCircle({
-					content: lineCon,
+					content: pointCon,
 					nodeId:nodeId,
 					currDate:currDate,
 					point: {
@@ -118,17 +125,18 @@ define(function(require,exports,module) {
 	
 				//标注转账钱数
 				inintMoneyText({
-					content: lineCon,
+					content: textCon,
 					money: thousandBitSeparator(item[2]),
 					startPoint: startPoint, //路径起点处
 					endPoint: endPoint
 				});
 			});
 			
+			//箭头向下
 			newToPointListBig.forEach(function(item, index) {
 				//画点
 				initCircle({
-					content: lineCon,
+					content: pointCon,
 					nodeId:nodeId,
 					currDate:currDate,
 					point: {
@@ -150,7 +158,7 @@ define(function(require,exports,module) {
 	
 				//标注转账钱数
 				inintMoneyText({
-					content: lineCon,
+					content: textCon,
 					money: thousandBitSeparator(item[2]),
 					startPoint: startPoint, //路径起点处
 					endPoint: endPoint
@@ -279,12 +287,12 @@ define(function(require,exports,module) {
 			var opts = $.extend(true, defOpts, options);
 			var opintG;
 			if(opts.recordNum == 0){
-				opintG = opts.content.append('g')
+				opintG = opts.content
 			}else{
 				opintG = opts.content.append('g')
 				.attr('date',opts.currDate)
 				.attr('nodeid', opts.nodeId)
-				.attr('class','centerPoint')
+				.attr('class','sourcePoint')
 				.on('click',function(){
 					callBack(this,$(this).attr('date'),$(this).attr('nodeid'))
 				});
@@ -308,6 +316,14 @@ define(function(require,exports,module) {
 					.attr('x', opts.point.x - textMidd / 2)
 					.attr('y', opts.point.y + opts.fontSize / 2 - 1)
 			}
+			
+			/*opintG.append("svg:image")  
+		        .attr("class", "circleImg")  
+		        .attr("xlink:href", "https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=933687855,2214933639&fm=58")  
+		        .attr('x', opts.point.x -18)
+				.attr('y', opts.point.y - 15)
+		        .attr("width", "36px")  
+		        .attr("height", "31px"); */
 		}
 	
 		/**
@@ -403,7 +419,8 @@ define(function(require,exports,module) {
 							toPointList:toPointList,
 							id:currNodeId,
 							date:currDate,
-							currPoint:[currX,currY]
+							currPoint:[currX,currY],
+							toSelf:nodeData.toSelf
 						})
 					})
 				}
@@ -419,7 +436,8 @@ define(function(require,exports,module) {
 				toPointList:data.toPointList,
 				currPoint: data.currPoint,
 				date:data.date,
-				id: data.id
+				id: data.id,
+				toSelf:data.toSelf
 			})
 		});
 	

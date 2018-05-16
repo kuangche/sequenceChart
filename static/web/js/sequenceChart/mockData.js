@@ -8,6 +8,7 @@ define(function(require) {
 		    	{
 		    		name:'北京压力山大贸易有限公司',
 					id:'1',
+					toSelf:true,
 		    		to:[{
 		    			name:'130955198904',
 			    		id:'2',
@@ -42,6 +43,7 @@ define(function(require) {
 	        	{
 	        		'name': '@cname',
 					'id': '@integer( 1, 7 )',
+					'toSelf':true,
 		    		'to|4':[{
 		    			'name': '@cname',
 			    		'id|+1': '@integer( 1, 7 )',
