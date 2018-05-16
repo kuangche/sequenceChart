@@ -319,7 +319,7 @@ define(function(require,exports,module) {
 			
 			/*opintG.append("svg:image")  
 		        .attr("class", "circleImg")  
-		        .attr("xlink:href", "https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=933687855,2214933639&fm=58")  
+		        .attr("xlink:href", "https://kuangche.github.io/sequenceChart/static/web/js/sequenceChart/utils/images/icon2.png")  
 		        .attr('x', opts.point.x -18)
 				.attr('y', opts.point.y - 15)
 		        .attr("width", "36px")  

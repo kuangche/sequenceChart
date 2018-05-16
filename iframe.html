@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script>
+			function setCookie(c_name,value,expiredays){
+				var exdate=new Date()
+				exdate.setDate(exdate.getDate()+expiredays)
+				document.cookie=c_name+ "=" +escape(value)+
+				((expiredays==null) ? "" : ";expires="+exdate.toGMTString())
+			}
+			setCookie('name','jige')
+		</script>
+	</head>
+	<body>
+		<div>
+			在使用Git的过程中，有些时候我们只想要git服务器中的最新版本的项目，对于本地的项目中修改不做任何理会，就需要用到Git pull的强制覆盖，具体代码如下：
+		</div>
+	</body>
+</html>
