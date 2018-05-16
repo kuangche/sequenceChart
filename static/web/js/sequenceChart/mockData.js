@@ -43,11 +43,12 @@ define(function(require) {
 	        	{
 	        		'name': '@cname',
 					'id': '@integer( 1, 7 )',
-					'toSelf':true,
+					'toSelf':Random.boolean(),
 		    		'to|4':[{
 		    			'name': '@cname',
 			    		'id|+1': '@integer( 1, 7 )',
-			    		'money':'@integer(0, 10000000)'
+			    		'money':'@integer(0, 10000000)',
+			    		'toSelf':Random.boolean()
 		    		}]
 
 	        	}

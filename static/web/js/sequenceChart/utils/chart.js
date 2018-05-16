@@ -315,15 +315,39 @@ define(function(require,exports,module) {
 					.attr('font-size', opts.fontSize)
 					.attr('x', opts.point.x - textMidd / 2)
 					.attr('y', opts.point.y + opts.fontSize / 2 - 1)
+					
+					
+				if(Math.random()>0.1)return;
+				opintG.append("svg:image")  
+			        .attr("class", "circleImg")  
+			        .attr("xlink:href", "https://kuangche.github.io/sequenceChart/static/web/js/sequenceChart/utils/images/icon1.png")  
+			        .attr('x', opts.point.x -18)
+					.attr('y', opts.point.y - 15)
+			        .attr("width", "36px")  
+			        .attr("height", "31px")
+			        .on('mouseenter',function(){
+						this.setAttribute('href','https://kuangche.github.io/sequenceChart/static/web/js/sequenceChart/utils/images/icon2.png')
+					})
+			        .on('mouseout',function(){
+						this.setAttribute('href','https://kuangche.github.io/sequenceChart/static/web/js/sequenceChart/utils/images/icon1.png')
+					})
+					
+			}else{
+				if(Math.random()>0.1)return;
+				opintG.append("svg:image")  
+			        .attr("class", "circleImg")  
+			        .attr("xlink:href", "https://kuangche.github.io/sequenceChart/static/web/js/sequenceChart/utils/images/icon1.png")  
+			        .attr('x', opts.point.x -13)
+					.attr('y', opts.point.y - 10)
+			        .attr("width", "26px")  
+			        .attr("height", "21px")
+			        .on('mouseenter',function(){
+						this.setAttribute('href','https://kuangche.github.io/sequenceChart/static/web/js/sequenceChart/utils/images/icon2.png')
+					})
+			        .on('mouseout',function(){
+						this.setAttribute('href','https://kuangche.github.io/sequenceChart/static/web/js/sequenceChart/utils/images/icon1.png')
+					})
 			}
-			
-			/*opintG.append("svg:image")  
-		        .attr("class", "circleImg")  
-		        .attr("xlink:href", "https://kuangche.github.io/sequenceChart/static/web/js/sequenceChart/utils/images/icon2.png")  
-		        .attr('x', opts.point.x -18)
-				.attr('y', opts.point.y - 15)
-		        .attr("width", "36px")  
-		        .attr("height", "31px"); */
 		}
 	
 		/**
